@@ -1,0 +1,58 @@
+---
+layout: runbook
+title: '#4471 · three problems, not one'
+owner: support desk
+status: living
+reviewed: 2026-10-28
+signature: v1.eyJzdG9yeSI6Im9mZiIsInN1YiI6IjE0NDYiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5MzIxOTUzNCwiZXhwIjoxNzkzMzA1OTM0fQ.4dugFXi8GcAgxDwRTdAb0ZUwQY4hydqXzRX5gGb7m4w
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+The [#4471 page](/kb/incidents/4471) says one issue, one fix. The reports say otherwise. They
+were merged on one symptom, a wrong date, and they hold three different problems. Fixing the
+parser will not close the ticket.
+
+<Callout kind="warn">
+Not one issue. A parser fix leaves the form-hint reports and the one-day reports open.
+</Callout>
+
+## What the reports hold
+
+<CauseTable ticket={4471} />
+
+The table is computed from the export, one row per cause. Each cause now has its own ticket:
+
+1. **Parser reads month first** ([issue 1](https://github.com/Mw-megadev/kb-4471/issues/1)).
+   The shared parser reads every date month first; day-first tenants write the day first.
+   This is the `parser` row, minus the one-day reports below.
+2. **Form hint says MM/DD/YYYY** ([issue 2](https://github.com/Mw-megadev/kb-4471/issues/2)).
+   Day-first tenants on `booking-v3` type what the hint tells them. This is the `hint` row.
+3. **Off by one day** ([issue 3](https://github.com/Mw-megadev/kb-4471/issues/3)).
+   Not a month flip. These are the reports in the note under the table, filed under `parser`
+   only because of their tenant. Likely a timezone or day-boundary bug.
+
+## Why one ticket looked right
+
+[Decision 0001](/kb/decisions/0001-dedupe-by-subject) merges on subject. Intake also tags each
+report from the reporter's browser. Both are guesses about the symptom. The cause depends on
+the tenant: its locale and its booking form (`causes.ts`). The "tagged as" column shows intake
+disagreeing with the cause in both rows.
+
+## Since April
+
+<QueueTimeline ticket={4471} />
+
+## What to do
+
+- Work the three tickets separately.
+- Triage by cause, not by subject line. [The explorer](/kb/triage/dedupe) shows pairs with the
+  same subject and different causes.
+- Do not read "merged" as "one bug". Count by cause.
+
+<RenderStamp {signature} />
