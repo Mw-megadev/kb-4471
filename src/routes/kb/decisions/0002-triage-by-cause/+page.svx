@@ -1,0 +1,25 @@
+---
+layout: runbook
+title: '0002 · Duplicates share a cause, not a subject'
+owner: support desk
+status: accepted
+reviewed: 2026-10-28
+---
+
+**Date:** 28 October 2026 · **Replaces:** [0001](/kb/decisions/0001-dedupe-by-subject)
+
+## Context
+
+Ticket #4471 merged 412 reports on one symptom, a wrong date. They hold separate causes
+(see [the split](/kb/incidents/4471-split)). The subject line told us nothing about the cause.
+
+## Decision
+
+Two reports are the same issue when they share a cause, computed by `causes.ts` from the
+tenant's locale and booking form. Subject lines do not decide a merge.
+
+## Consequences
+
+- One ticket per cause, each with its own report count.
+- Slower than matching subjects, but a fix closes the right reports.
+- Reports the desk reads differently from their cause are footnoted, not hidden.
