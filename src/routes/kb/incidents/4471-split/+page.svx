@@ -30,12 +30,11 @@ The table is computed from the export, one row per cause. Each cause now has its
 
 1. **Parser reads month first** ([issue 1](https://github.com/Mw-megadev/kb-4471/issues/1)).
    The shared parser reads every date month first; day-first tenants write the day first.
-   This is the `parser` row, minus the one-day reports below.
+   This is the `parser` row; it includes the one-day reports below, which the desk counts where they are filed.
 2. **Form hint says MM/DD/YYYY** ([issue 2](https://github.com/Mw-megadev/kb-4471/issues/2)).
    Day-first tenants on `booking-v3` type what the hint tells them. This is the `hint` row.
 3. **Off by one day** ([issue 3](https://github.com/Mw-megadev/kb-4471/issues/3)).
-   Not a month flip. These are the reports in the note under the table, filed under `parser`
-   only because of their tenant. Likely a timezone or day-boundary bug.
+   Not a month flip. These are the reports in the note under the table. They are also counted in the `parser` row, because they are filed there by tenant. Likely a timezone or day-boundary bug.
 
 ## Why one ticket looked right
 

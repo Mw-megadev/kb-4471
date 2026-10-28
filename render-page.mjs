@@ -63,9 +63,9 @@ ${rows}
 </tbody></table>
 ${foot}
 <p>The table is computed from the export, one row per cause. Each cause now has its own ticket:</p>
-<ol><li><b>Parser reads month first</b> (<a href="https://github.com/Mw-megadev/kb-4471/issues/1">issue 1</a>). The shared parser reads every date month first; day-first tenants write the day first. This is the <code>parser</code> row, minus the one-day reports below.</li>
+<ol><li><b>Parser reads month first</b> (<a href="https://github.com/Mw-megadev/kb-4471/issues/1">issue 1</a>). The shared parser reads every date month first; day-first tenants write the day first. This is the <code>parser</code> row; it includes the one-day reports below, which the desk counts where they are filed.</li>
 <li><b>Form hint says MM/DD/YYYY</b> (<a href="https://github.com/Mw-megadev/kb-4471/issues/2">issue 2</a>). Day-first tenants on <code>booking-v3</code> type what the hint tells them. This is the <code>hint</code> row.</li>
-<li><b>Off by one day</b> (<a href="https://github.com/Mw-megadev/kb-4471/issues/3">issue 3</a>). Not a month flip. These are the reports in the note under the table, filed under <code>parser</code> only because of their tenant. Likely a timezone or day-boundary bug.</li></ol>
+<li><b>Off by one day</b> (<a href="https://github.com/Mw-megadev/kb-4471/issues/3">issue 3</a>). Not a month flip. These are the reports in the note under the table, also counted in the <code>parser</code> row, because they are filed there by tenant. Likely a timezone or day-boundary bug.</li></ol>
 <h2>Why one ticket looked right</h2>
 <p><a href="/kb/decisions/0001-dedupe-by-subject">Decision 0001</a> merges on subject. Intake also tags each report from the reporter's browser. Both are guesses about the symptom. The cause depends on the tenant: its locale and its booking form (<code>causes.ts</code>). The "tagged as" column shows intake disagreeing with the cause in both rows.</p>
 <h2>Since April</h2>
